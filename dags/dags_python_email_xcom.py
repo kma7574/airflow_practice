@@ -21,8 +21,8 @@ with DAG(
         to = 'kma7574@naver.com',
         subject = '{{ data_interval_end.in_timezone("Asia/Seoul") | ds}} some logic 처리 결과',
         html_content = '{{ data_interval_end.in_timezone("Asia/Seoul") | ds}} some logic 처리 결과는 <br> \
-                        {{ti.xcom_pull(task_ids=something_task)}} 했습니다. <br> \
-                        위 메시지는 airflow email operator를 통해 전송되었습니다.'
+                        {{ti.xcom_pull(task_ids="something_task")}} 했습니다. <br> \
+                        위 메시지는 airflow email operator를 통해 전송되었습니다. <br>'
     )
 
     some_logic() >> send_email
