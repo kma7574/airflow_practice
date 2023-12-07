@@ -3,7 +3,7 @@ import pendulum
 from airflow.operators.python import PythonOperator
 
 with DAG(
-    dag_id='dags_python_with_postgres',
+    dag_id='dags_python_with_postgres_hook',
     start_date=pendulum.datetime(2023,4,1, tz='Asia/Seoul'),
     schedule=None,
     catchup=False
@@ -27,10 +27,10 @@ with DAG(
                 cursor.execute(sql,(dag_id,task_id,run_id,msg))
                 conn.commit()
 
-    insrt_postgres = PythonOperator(
-        task_id='insrt_postgres',
+    insrt_postgres_with_hook = PythonOperator(
+        task_id='insrt_postgres_with_hook',
         python_callable=insrt_postgres,
         op_kwargs={'postgres_conn_id':'conn-db-postgres-custom'} # 밖으로 누설되어서는 안되는 정보들을 숨길 수 있음
     )
         
-    insrt_postgres
+    insrt_postgres_with_hook
